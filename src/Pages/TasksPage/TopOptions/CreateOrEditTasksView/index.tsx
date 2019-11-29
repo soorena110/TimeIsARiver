@@ -50,6 +50,6 @@ class CreateOrEditTasksView extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: ApplicationState, ownProps: { id?: number }) => ({
-    editingTask: state.tasks.tasks && ownProps.id && state.tasks.tasks[ownProps.id]
+    editingTask: state.tasks.tasks && ownProps.id != undefined && state.tasks.tasks[ownProps.id]
 });
 export default connect(mapStateToProps)(CreateOrEditTasksView);

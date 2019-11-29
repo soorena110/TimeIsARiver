@@ -3,10 +3,7 @@ import {connect} from "react-redux";
 import {ApplicationState} from "../../../Redux";
 import Services from "../../../Services";
 import {TaskInfo, TaskType} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
-import {SorTable, SorTableColumn} from "../../../Framework";
-import {numberToHour} from "../../_utils";
-import CreateOrEditTasksView from "../TopOptions/CreateOrEditTasksView";
-import DeleteTaskView from "../TopOptions/DeleteTaskView";
+import {SorTable} from "../../../Framework";
 import commonColumns from "./commonColumns";
 
 interface Props {

@@ -20,7 +20,7 @@ function convertToJalaliDateTime(dateTime: any) {
 
 const commonColumns: SorTableColumn<TaskInfo>[] = [
     {
-        accessor: "_id",
+        accessor: "id",
         title: 'شماره',
         sortable: true
     },
@@ -60,7 +60,7 @@ const commonColumns: SorTableColumn<TaskInfo>[] = [
         sortable: true
     },
     {
-        accessor: '_id',
+        accessor: 'id',
         title: '',
         render: id => {
             return <React.Fragment key={id}>

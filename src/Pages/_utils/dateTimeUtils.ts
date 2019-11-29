@@ -49,7 +49,7 @@ function computeTaskOfDateForDay(tasks: TaskInfo[], startDate: Date, endDate: Da
     };
     return tasks.map(task => {
         const ret: TaskView = {
-            taskId: task._id,
+            taskId: task.id,
             date: getDateFromDateTime(startDate),
             startHour: task.start && new Date(task.start) > startDate ? getHourFromDateTime(task.start) : undefined,
             endHour: computeEndHour(task),
@@ -78,7 +78,7 @@ function computeTaskOfDateForWeek(tasks: TaskInfo[], startDate: Date, endDate: D
 
     return tasks.map(task => {
         const ret: TaskView = {
-            taskId: task._id,
+            taskId: task.id,
             date: getDateFromDateTime(startDate),
             startHour: task.startHour,
             endHour: task.endHour,
@@ -108,7 +108,7 @@ function computeTaskOfDateForMonth(tasks: TaskInfo[], startDate: Date, endDate: 
 
     return tasks.map(task => {
         const ret: TaskView = {
-            taskId: task._id,
+            taskId: task.id,
             date: getDateFromDateTime(startDate),
             startHour: task.startHour,
             endHour: task.endHour,

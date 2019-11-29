@@ -18,7 +18,7 @@ class TasksInfo extends React.Component<Props> {
         if (!task)
             return null;
         return <div className="task-info">
-            <div>id : <b>{task._id}</b></div>
+            <div>id : <b>{task.id}</b></div>
             <div>name : <b>{task.name}</b></div>
             {task.start && <div>start : <b><DateTime>{task.start}</DateTime></b></div>}
             {task.end && <div>end : <b><DateTime>{task.end}</DateTime></b></div>}

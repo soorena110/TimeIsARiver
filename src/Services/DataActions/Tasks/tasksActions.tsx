@@ -25,7 +25,7 @@ export const tasksActions = {
             return;
 
         dispatch({type: 'Flag_tasks', key: 'deleting_' + id});
-        Ajaxious.delete('taskView/' + id).then((res: any) => {
+        Ajaxious.delete('task/' + id).then((res: any) => {
             if (res.status == 200) {
                 dispatch([
                     {type: 'remove_tasks', key: id},
@@ -50,12 +50,12 @@ export const tasksActions = {
         });
     },
     editTask(task: any, onSuccess?: () => void) {
-        const id = task._id;
+        const id = task.id;
         if (getState().tasks.tasks_flag['editing_' + id])
             return;
 
         dispatch({type: 'Flag_tasks', key: 'editing_' + id});
-        return Ajaxious.put('taskView/' + id, task).then((res: any) => {
+        return Ajaxious.put('task/' + id, task).then((res: any) => {
             if (res.status == 200) {
                 onSuccess && onSuccess();
                 dispatch([

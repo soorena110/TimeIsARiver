@@ -30,7 +30,7 @@ interface Props<T = any> {
     className?: string;
     trClassName?: string;
     onSelect?: (e: { rowData: T }) => void;
-    defaultSortIndex?:number;
+    defaultSortIndex?: number;
 }
 
 interface State<T> {
@@ -44,7 +44,7 @@ export default class SorTable<T> extends React.Component<Props<T>, State<T>> {
     constructor(props: Props<T>) {
         super(props);
         this.state = {
-            sortByIndex:props.defaultSortIndex,
+            sortByIndex: props.defaultSortIndex,
             sortDesc: false
         };
     }
@@ -53,9 +53,9 @@ export default class SorTable<T> extends React.Component<Props<T>, State<T>> {
         isHoverable: true
     };
 
-    componentWillReceiveProps(nextProps: Props<T>) {
-        if (nextProps.selectedDataRow && nextProps.selectedDataRow != this.props.selectedDataRow)
-            this.setState({selectedDataRow: nextProps.selectedDataRow});
+    componentDidUpdate(prevProps: Props) {
+        if (this.props.selectedDataRow && this.props.selectedDataRow != prevProps.selectedDataRow)
+            this.setState({selectedDataRow: this.props.selectedDataRow});
     }
 
     setSelectedIndex(dataRow: T) {
@@ -162,7 +162,7 @@ const compare = (a: any, b: any): 1 | 0 | -1 => {
     if (typeof a == "string")
         return Persian.letter.compareString(a, b);
 
-    if(a == undefined && b == undefined)
+    if (a == undefined && b == undefined)
         return 0;
 
     if (b == undefined || a > b) return 1;

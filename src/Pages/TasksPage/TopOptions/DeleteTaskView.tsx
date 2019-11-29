@@ -37,7 +37,9 @@ function DeleteTaskView(props: Props) {
 }
 
 
-const mapStateToProps = (state: ApplicationState, ownProps: { id: number }) => ({
-    editingTask: state.tasks.tasks && ownProps.id && state.tasks.tasks[ownProps.id]
-});
+const mapStateToProps = (state: ApplicationState, ownProps: { id: number }) => {
+    return {
+        editingTask: state.tasks.tasks && ownProps.id != undefined && state.tasks.tasks[ownProps.id]
+    }
+};
 export default connect(mapStateToProps)(DeleteTaskView);

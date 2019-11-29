@@ -2,11 +2,11 @@ import {ReducerCreator} from "redux-solid";
 import defaultState from "./defaultState";
 
 export const tasksReducer = new ReducerCreator()
-    .withDictionaryReducer('tasks', '_id', {
+    .withDictionaryReducer('tasks', 'id', {
         recreateDictionaryOnObjectChange: false,
         isArrayDictionary: true
     })
-    .withDictionaryReducer('ticks', '_id', {
+    .withDictionaryReducer('ticks', 'id', {
         recreateDictionaryOnObjectChange: false,
         isArrayDictionary: true
     })

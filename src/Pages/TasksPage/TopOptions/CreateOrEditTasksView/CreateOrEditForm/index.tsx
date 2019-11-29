@@ -25,7 +25,7 @@ export default class CreateOrEditForm extends React.Component<Props, State> {
 
     async submit() {
         let isSuccess = false;
-        if (this.state.creatingOrEditingTask._id)
+        if (this.state.creatingOrEditingTask.id)
             await Services.tasksService.editTask(this.state.creatingOrEditingTask, () => isSuccess = true);
         else
             await Services.tasksService.createTask(this.state.creatingOrEditingTask, () => {
