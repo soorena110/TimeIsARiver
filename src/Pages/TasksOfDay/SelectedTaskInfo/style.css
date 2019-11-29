@@ -1,0 +1,14 @@
+.task-info {
+    display: inline-block;
+    text-align: left;
+    padding: 5px;
+    border-radius: 4px;
+    background: #eeeeee;
+    margin: 5px;
+    border: solid 1px orange;
+    z-index: 9999;
+}
+
+.task-info > div {
+    direction: ltr;
+}

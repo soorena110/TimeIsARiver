@@ -1,0 +1,14 @@
+.header-nav-link {
+    background: white;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    border: solid 1px #cccccc;
+    color: gray;
+}
+
+.header-nav-link:hover {
+    color: deepskyblue;
+    border-color: deepskyblue;
+
+}

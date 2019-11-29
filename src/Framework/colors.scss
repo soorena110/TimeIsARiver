@@ -1,0 +1,83 @@
+//#region color definition
+
+$success: #19bf62;
+$danger: #ff005e;
+$warning: #f7b500;
+$info: #3d94fc;
+$clean: white;
+
+//#endregion
+
+//#region border
+
+.border-success {
+  border-style: solid;
+  border-width: 1px;
+  border-color: $success;
+  color: $success;
+}
+
+.border-warning {
+  border-style: solid;
+  border-width: 1px;
+  border-color: $warning;
+  color: $warning;
+}
+
+.border-info {
+  border-style: solid;
+  border-width: 1px;
+  border-color: $danger;
+  color: $danger;
+}
+
+.border-info {
+  border-style: solid;
+  border-width: 1px;
+  border-color: $info;
+  color: $info;
+}
+
+//#endregion
+//#region background
+
+.success {
+  background: $success;
+  color: $clean;
+}
+
+.warning {
+  background: $warning;
+  color: $clean;
+}
+
+.info {
+  background: $info;
+  color: $clean;
+}
+
+.danger {
+  background: $danger;
+  color: $clean;
+}
+
+//#endregion
+//#region text
+
+.text-success {
+  color: $success;
+}
+
+.text-danger {
+  color: $danger;
+}
+
+.text-warning {
+  color: $warning;
+}
+
+.text-info {
+  color: $info;
+}
+
+//#endregion

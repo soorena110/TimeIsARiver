@@ -1,0 +1,8 @@
+:lang(datetime) {
+    direction: ltr !important;
+    display: inline-block;
+}
+
+.datetime-empty {
+    color: #888888;
+}

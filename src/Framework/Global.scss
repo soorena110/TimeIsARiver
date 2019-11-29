@@ -1,0 +1,102 @@
+*:not(i) {
+  font-family: "IRANSans", "DroidArabicNaskhRegular", serif !important;
+}
+
+body {
+  height: 100%;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 0.85em;
+  line-height: 1.4285em;
+}
+
+html, body {
+  font-size: 0.85em;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+*, :after, :before {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit
+}
+
+button, input, optgroup, select, textarea {
+  line-height: 1.15;
+  margin: 0
+}
+
+button, input {
+  overflow: visible
+}
+
+button, select {
+  text-transform: none
+}
+
+h1 {
+  min-height: 1rem;
+  font-size: 2rem
+}
+
+h2 {
+  font-size: 1.71428571rem
+}
+
+h3 {
+  font-size: 1.28571429rem
+}
+
+h4 {
+  font-size: 1.07142857rem
+}
+
+h5 {
+  font-size: 1rem
+}
+
+h1, h2, h3, h4, h5 {
+  &:first-child {
+    margin-top: 0
+  }
+  &:last-child {
+    margin-bottom: 0
+  }
+}
+
+p {
+  &:first-child {
+    margin-top: 0
+  }
+  &:last-child {
+    margin-bottom: 0
+  }
+  margin: 0 0 1em;
+  line-height: 1.4285em
+}
+
+th, td {
+  text-align: center;
+}
+
+a {
+  &:hover {
+    color: #1e70bf;
+    text-decoration: none
+  }
+  color: #4183c4;
+  text-decoration: none
+}
+
+table {
+  direction: rtl !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,27 @@
+.tooltip-element {
+    padding: 5px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #e8edf0 !important;
+    color: #000 !important;
+    border-radius: 4px;
+}
+.react-tooltip-lite-arrow{
+    color: #e8edf0 !important;
+    z-index: 9999999 !important;
+}
+
+.react-tooltip-lite{
+    padding: 0 !important;
+    padding-top: 2px !important;
+    max-width: 200px !important;
+    z-index: 9999999 !important;
+}
+
+.tooltip-element:before {
+    background: #e8edf0 !important;
+}
+
+.tooltip-element-text {
+    font-size: .8rem;
+}

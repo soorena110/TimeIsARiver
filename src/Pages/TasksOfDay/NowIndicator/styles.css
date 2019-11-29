@@ -1,0 +1,10 @@
+
+.now-line-indicator {
+    position: absolute;
+    width: 2px;
+    display: inline-block;
+    height: 100%;
+    background: deepskyblue;
+    top: 0;
+    box-shadow: 0 0 5px 1px deepskyblue;
+}
