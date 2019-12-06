@@ -10,7 +10,7 @@ import {TickInfo} from "../../Redux/DataState/Tasks/Models/TickInfo";
 import Services from "../../Services";
 import TasksInfo from "../TasksOfDay/SelectedTaskInfo";
 import {convertToJalaliDateTime} from "../_utils";
-import TickMiniDisplay from "./TickChangeDropDown";
+import TickMiniDisplay from "./TickMiniDisplay";
 
 interface Props {
     ticks?: { [key: string]: TickInfo | undefined }
@@ -61,11 +61,6 @@ class TicksPage extends React.Component<Props, State> {
             accessor: 'postponeEnd',
             title: 'تاریخ پشت انداز',
             render: convertToJalaliDateTime,
-            sortable: true
-        },
-        {
-            accessor: 'description',
-            title: 'توضیح',
             sortable: true
         },
         {

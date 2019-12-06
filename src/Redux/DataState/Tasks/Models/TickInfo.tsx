@@ -5,10 +5,9 @@ const {magic} = require('react-icons-kit/fa/magic');
 const {bicycle} = require('react-icons-kit/fa/bicycle');
 
 export interface TickInfo {
-    id: string;
+    id: number;
     taskId: number;
     type: TickType;
-    description: string;
     forDate: string;
     start: string;
     end: string;

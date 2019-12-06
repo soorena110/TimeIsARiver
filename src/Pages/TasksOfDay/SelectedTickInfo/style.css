@@ -1,0 +1,14 @@
+.tick-info {
+    display: inline-block;
+    text-align: left;
+    padding: 5px;
+    border-radius: 4px;
+    background: #eeeeee;
+    margin: 5px;
+    border: solid 1px green;
+    z-index: 9999;
+}
+
+.tick-info > div {
+    direction: ltr;
+}

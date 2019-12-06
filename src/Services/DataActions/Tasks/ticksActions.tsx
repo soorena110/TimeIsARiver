@@ -7,12 +7,12 @@ export const ticksActions = {
         if (getState().tasks.ticks || getState().tasks.ticks_flag['all'])
             return;
 
-        dispatch({type: 'Flag_ticks', key: 'all'});
+        dispatch({type: 'flag_ticks', key: 'all'});
         return Ajaxious.get('/ticks').then(res => {
-            const unflagAction = {type: 'Unflag_ticks', key: 'all'};
+            const unflagAction = {type: 'unflag_ticks', key: 'all'};
             if (res.isSuccess) {
                 dispatch([
-                    {type: 'Set_ticks', data: res.data},
+                    {type: 'set_ticks', data: res.data},
                     unflagAction
                 ]);
             } else dispatch(unflagAction);
@@ -38,7 +38,7 @@ export const ticksActions = {
             const unflagAction = {type: 'unflag_ticks', key: flagKey};
             if (res.isSuccess) {
                 dispatch([
-                    {type: 'Set_ticks', data: res.data},
+                    {type: 'add_ticks', data: res.data},
                     unflagAction
                 ]);
             } else dispatch(unflagAction);

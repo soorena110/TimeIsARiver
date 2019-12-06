@@ -1,6 +1,5 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import './style.css';
 import {ApplicationState} from "../../../Redux";
 import withErrorBoundary from "../../../Framework/ErrorBoundry";
 import {
@@ -13,6 +12,7 @@ import {
 import Icon from "react-icons-kit";
 import {DropDownItem, PopupMenu} from "react-lite-form-creator";
 import Services from "../../../Services";
+import {TaskType} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 
 
 interface Props {
@@ -27,6 +27,10 @@ interface State {
 
 @withErrorBoundary
 class TickMiniDisplay extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        Services.tasksService.requestAllTicks();
+    }
 
     _typesDropDownItems: DropDownItem[] = [TickType.todo, TickType.doing, TickType.done, TickType.canceled, TickType.postponed]
         .map(type => ({
@@ -44,7 +48,15 @@ class TickMiniDisplay extends React.Component<Props, State> {
     _renderTrigger() {
         const type = (this.props.tick || {}).type || TickType.todo;
 
-        return <span style={{background: TickTypeColors[type], color: "white", padding: 4, borderRadius: 4}}>
+        return <span onMouseEnter={() => this.props.tick && Services.pagesService.setSelectedTickId(this.props.tick.id)}
+                     onMouseLeave={() => this.props.tick && Services.pagesService.setSelectedTickId(undefined)}
+                     style={{
+                         background: TickTypeColors[type],
+                         color: "white",
+                         padding: 4,
+                         borderRadius: 4,
+                         cursor: 'pointer'
+                     }}>
             <Icon icon={TickTypeIcons[type]}/>
             {' '}
             {TickTypeNames[type]}
@@ -58,8 +70,9 @@ class TickMiniDisplay extends React.Component<Props, State> {
     }
 }
 
-const mapStateToProps = (state: ApplicationState, ownProps: { taskId: number, forDate: string }) => {
-    const tick = (state.tasks.ticks as any || []).find((r: TickInfo) => r && r.taskId == ownProps.taskId && r.forDate == ownProps.forDate);
+const mapStateToProps = (state: ApplicationState, ownProps: { taskId: number, forDate: string, taskType?: TaskType }) => {
+    const tick = (state.tasks.ticks as any || []).find((r: TickInfo) => r && r.taskId == ownProps.taskId &&
+        (ownProps.taskType == TaskType.day || r.forDate == ownProps.forDate));
     return {
         tick
     }

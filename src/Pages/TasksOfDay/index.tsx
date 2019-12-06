@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {ApplicationState} from "../../Redux";
 import withErrorBoundary from "../../Framework/ErrorBoundry";
 import Services from "../../Services";
-import {TaskInfo} from "../../Redux/DataState/Tasks/Models/TaskInfo";
+import {TaskInfo, TaskType} from "../../Redux/DataState/Tasks/Models/TaskInfo";
 import computeTaskOfDate, {getDateFromDateTime} from "../_utils/dateTimeUtils";
 import TaskRow from "./TimeRow";
 import './styles.css';
@@ -11,15 +11,23 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import Persian from "persian-info";
 import Calendar from "./Calendar";
 import TasksInfo from "./SelectedTaskInfo";
+import TickMiniDisplay from "../TicksPage/TickMiniDisplay";
+import TicksInfo from "./SelectedTickInfo";
+import TaskTypeSelector from "../TasksPage/TopOptions/TaskTypeSelector";
 
 interface Props extends RouteComponentProps<{ 'date': string }> {
     tasks?: { [id: string]: TaskInfo };
 }
 
+interface State {
+    taskType?: TaskType;
+}
+
 @withErrorBoundary
-class TasksOfDay extends React.Component<Props> {
+class TasksOfDay extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
+        this.state = {};
         Services.tasksService.requestAllTasks();
     }
 
@@ -37,7 +45,10 @@ class TasksOfDay extends React.Component<Props> {
             return [];
 
         const theDate = this._getDate();
-        const allTasks = (this.props.tasks as any).filter((r: any) => Boolean(r));
+        let allTasks = (this.props.tasks as any).filter((r: TaskInfo) => Boolean(r));
+        if (this.state.taskType != undefined)
+            allTasks = allTasks.filter((r: TaskInfo) => r.type == this.state.taskType)
+
         const currentDayStart = getDateFromDateTime(theDate);
         return computeTaskOfDate(allTasks, currentDayStart, new Date(currentDayStart.valueOf() + 24 * 3600 * 1000));
     }
@@ -56,6 +67,7 @@ class TasksOfDay extends React.Component<Props> {
                     ))}
                 </div>
             </th>
+            <th/>
         </tr>
         </thead>
     }
@@ -67,7 +79,8 @@ class TasksOfDay extends React.Component<Props> {
         {taskViews.map(taskView => {
             const task = (this.props.tasks || {})[taskView.taskId];
             return <tr key={taskView.taskId}
-                       onMouseEnter={() => Services.pagesService.setSelectedTaskId(taskView.taskId)}>
+                       onMouseEnter={() => Services.pagesService.setSelectedTaskId(taskView.taskId)}
+                       onMouseLeave={() => Services.pagesService.setSelectedTaskId(undefined)}>
                 <td style={{width: 70, position: 'relative'}}>
                     {task.name}
                     {task.estimate && <span className="tasks-of-day-estimate-badge">
@@ -77,19 +90,33 @@ class TasksOfDay extends React.Component<Props> {
                 <td>
                     <TaskRow taskView={taskView}/>
                 </td>
+                <td style={{width: 100}}>
+                    <TickMiniDisplay taskId={taskView.taskId}
+                                     forDate={taskView.date.toISOString().split('T')[0]}/>
+                </td>
             </tr>
         })}
         </tbody>
     }
 
+    _renderTopConfigsAndInfos(){
+        return <div style={{position: 'relative', display: 'flex'}}>
+            <Calendar/>
+            <span style={{margin: 5}}>
+                    <TaskTypeSelector canBeUnset
+                                      selectedValue={this.state.taskType as any}
+                                      onChange={e => this.setState({taskType: e.newValue})}/>
+                </span>
+            <div style={{position: 'absolute', bottom: 0, left: 0}}>
+                <TicksInfo/>
+                <TasksInfo/>
+            </div>
+        </div>
+    }
+
     render() {
         return <>
-            <div style={{position: 'relative'}}>
-                <Calendar/>
-                <div style={{position: 'absolute', bottom: 0, left: 0}}>
-                    <TasksInfo/>
-                </div>
-            </div>
+            {this._renderTopConfigsAndInfos()}
             <table className="tasks-of-day" cellSpacing={0}>
                 {this._renderTableHeader()}
                 {this._renderTableBody()}

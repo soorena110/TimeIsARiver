@@ -7,14 +7,18 @@ import './style.css';
 interface Props {
     selectedValue: TaskType;
     onChange: (e: { newValue: TaskType }) => void;
+    canBeUnset?: boolean;
 }
 
-const items = [TaskType.day, TaskType.week, TaskType.month].map(key => ({
-    title: TaskTypeName[key],
-    value: key
-}) as BoxDropDownItem);
-
 const TaskTypeSelector = (props: Props) => {
+    let items = [TaskType.day, TaskType.week, TaskType.month].map(key => ({
+        title: TaskTypeName[key],
+        value: key
+    }) as BoxDropDownItem);
+
+    if (props.canBeUnset)
+        items = [{title: 'همه تسک‌ها', value: undefined}, ...items];
+
     return <DropDown name="TaskTypeSelector"
                      value={props.selectedValue}
                      className="task-type-selector info"
