@@ -1,4 +1,49 @@
+const {thumbsODown} = require('react-icons-kit/fa/thumbsODown');
+const {thumbsOUp} = require('react-icons-kit/fa/thumbsOUp');
+const {listOl} = require('react-icons-kit/fa/listOl');
+const {magic} = require('react-icons-kit/fa/magic');
+const {bicycle} = require('react-icons-kit/fa/bicycle');
+
 export interface TickInfo {
     id: string;
-    name: string;
+    taskId: number;
+    type: TickType;
+    description: string;
+    forDate: string;
+    start: string;
+    end: string;
+    postponeEnd: string;
+    lastUpdate: string;
 }
+
+export enum TickType {
+    todo,
+    doing,
+    done,
+    canceled,
+    postponed
+}
+
+export const TickTypeNames = {
+    [TickType.todo]: 'تودو',
+    [TickType.done]: 'انجام‌شده',
+    [TickType.doing]: 'درحال انجام',
+    [TickType.canceled]: 'کنسل‌شده',
+    [TickType.postponed]: 'تعویقی'
+} as any;
+
+export const TickTypeIcons = {
+    [TickType.todo]: listOl,
+    [TickType.done]: thumbsOUp,
+    [TickType.doing]: bicycle,
+    [TickType.canceled]: thumbsODown,
+    [TickType.postponed]: magic
+} as any;
+
+export const TickTypeColors = {
+    [TickType.todo]: 'yellowgreen',
+    [TickType.done]: 'deepskyblue',
+    [TickType.doing]: 'green',
+    [TickType.canceled]: 'red',
+    [TickType.postponed]: 'orange'
+} as any;

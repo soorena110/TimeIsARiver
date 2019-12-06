@@ -60,10 +60,6 @@ class TasksOfDay extends React.Component<Props> {
         </thead>
     }
 
-    _renderNowLine() {
-
-    }
-
     _renderTableBody() {
         const taskViews = this._getTasksOfCurrentDate();
 

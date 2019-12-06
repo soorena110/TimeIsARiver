@@ -16,7 +16,7 @@ interface State {
 }
 
 @withErrorBoundary
-class TasksPage extends React.Component<any, State> {
+export default class TasksPage extends React.Component<any, State> {
 
     constructor(props: any) {
         super(props);
@@ -52,8 +52,3 @@ class TasksPage extends React.Component<any, State> {
         </div>
     }
 }
-
-const mapStateToProps = (state: ApplicationState) => ({
-    tasks: state.tasks.tasks
-});
-export default connect(mapStateToProps)(TasksPage);
