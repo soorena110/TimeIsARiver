@@ -6,11 +6,12 @@ import {ScrollbarContainer} from "react-lite-form-creator";
 import withErrorBoundary from "../../Framework/ErrorBoundry";
 import {DateTime, SorTable, SorTableColumn} from "../../Framework";
 import {TaskInfo} from "../../Redux/DataState/Tasks/Models/TaskInfo";
-import {TickInfo} from "../../Redux/DataState/Tasks/Models/TickInfo";
+import {TickInfo, TickType} from "../../Redux/DataState/Tasks/Models/TickInfo";
 import Services from "../../Services";
 import TasksInfo from "../TasksOfDay/SelectedTaskInfo";
 import {convertToJalaliDateTime} from "../_utils";
-import TickMiniDisplay from "./TickMiniDisplay";
+import TickMiniDisplay from "../Common/TickMiniDisplay";
+import TickTypeSelector from "../Common/TickTypeSelector";
 
 interface Props {
     ticks?: { [key: string]: TickInfo | undefined }
@@ -18,6 +19,7 @@ interface Props {
 }
 
 interface State {
+    showingTickType?: TickType;
 }
 
 @withErrorBoundary
@@ -25,6 +27,8 @@ class TicksPage extends React.Component<Props, State> {
 
     constructor(props: any) {
         super(props);
+        this.state = {};
+
         Services.tasksService.requestAllTicks();
         Services.tasksService.requestAllTasks();
     }
@@ -82,19 +86,23 @@ class TicksPage extends React.Component<Props, State> {
         }
     ];
 
-    _getTicks() {
+    _getTicks(): TickInfo[] {
         if (!this.props.ticks)
             return [];
 
-        return (this.props.ticks as any).filter((r: TaskInfo) => Boolean(r));
+        let ret = (this.props.ticks as any).filter((r: TaskInfo) => Boolean(r)) as TickInfo[];
+        if (this.state.showingTickType != undefined)
+            ret = ret.filter(r => r.type == this.state.showingTickType);
+
+        return ret;
     }
 
     render() {
         return <div style={{display: 'flex', flexDirection: "column", height: "100%"}}>
             <div className="tick-page-top-panel">
                 <TasksInfo/>
-                {/*<TaskTypeSelector selectedValue={this.state.showingTaskType}*/}
-                {/*                  onChange={e => this.setState({showingTaskType: e.newValue})}/>*/}
+                <TickTypeSelector selectedValue={this.state.showingTickType}
+                                  onChange={e => this.setState({showingTickType: e.newValue})}/>
             </div>
             <ScrollbarContainer style={{flex: 1}}>
                 <SorTable columns={this._columns} data={this._getTicks()}/>
@@ -108,3 +116,8 @@ const mapStateToProps = (state: ApplicationState) => ({
     tasks: state.tasks.tasks
 });
 export default connect(mapStateToProps)(TicksPage);
+
+
+
+declare const module: any;
+module.hot.accept('./index.tsx');

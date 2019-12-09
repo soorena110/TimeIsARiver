@@ -5,7 +5,7 @@ import {TaskType} from "../../Redux/DataState/Tasks/Models/TaskInfo";
 import DayTasks from "./ListTypes/DayTasks";
 import MonthTasks from "./ListTypes/MonthTasks";
 import WeekTasks from "./ListTypes/WeekTasks";
-import TaskTypeSelector from "./TopOptions/TaskTypeSelector";
+import TaskTypeSelector from "../Common/TaskTypeSelector";
 import './style.css';
 import CreateOrEditTasksView from "./TopOptions/CreateOrEditTasksView";
 import {ScrollbarContainer} from "react-lite-form-creator";
@@ -52,3 +52,7 @@ export default class TasksPage extends React.Component<any, State> {
         </div>
     }
 }
+
+
+declare const module: any;
+module.hot.accept('./index.tsx');

@@ -1,4 +1,4 @@
-import {TaskType, TaskTypeName} from "../../../../Redux/DataState/Tasks/Models/TaskInfo";
+import {TaskType, TaskTypeName} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import * as React from "react";
 import {DropDown} from "react-lite-form-creator";
 import {BoxDropDownItem} from "react-lite-form-creator/dist/Form/DropDown";

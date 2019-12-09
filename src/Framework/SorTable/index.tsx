@@ -151,10 +151,12 @@ export default class SorTable<T> extends React.Component<Props<T>, State<T>> {
     }
 
     render() {
-        return <table className={this._getTableClass()} cellSpacing={0}>
+        return <div style={{overflow: 'auto'}}>
+            <table className={this._getTableClass()} cellSpacing={0}>
             {this._renderHeader()}
             {this._renderBody()}
         </table>
+        </div>
     }
 }
 

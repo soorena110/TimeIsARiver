@@ -5,7 +5,7 @@ import {ApplicationState} from "../../../Redux";
 import withErrorBoundary from "../../../Framework/ErrorBoundry";
 import {DateTime} from "../../../Framework";
 import {convertNumberToWeekDays} from "../../_utils";
-import {TickInfo} from "../../../Redux/DataState/Tasks/Models/TickInfo";
+import {TickInfo, TickTypeNames} from "../../../Redux/DataState/Tasks/Models/TickInfo";
 
 interface Props {
     tick?: TickInfo;
@@ -20,6 +20,7 @@ class TicksInfo extends React.Component<Props> {
         return <div className="tick-info">
             <div>id : <b>{tick.id}</b></div>
             <div>taskId : <b>{tick.taskId}</b></div>
+            <div>tickType : <b>{TickTypeNames[tick.type]}</b></div>
             {tick.forDate && <div>forDate : <b><DateTime type="dateOnly">{tick.forDate}</DateTime></b></div>}
             {tick.start && <div>start : <b><DateTime>{tick.start}</DateTime></b></div>}
             {tick.end && <div>end : <b><DateTime>{tick.end}</DateTime></b></div>}

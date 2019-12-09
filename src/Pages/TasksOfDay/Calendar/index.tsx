@@ -21,7 +21,7 @@ class Calendar extends React.Component<Props> {
     }
 
     render() {
-        return <span style={{display: "inline-block", border: 'solid 1px lightgray'}}>
+        return <span style={{display: "inline-block", border: 'solid 1px #eeeeee'}}>
             <DatePicker selectedDay={this._getDate()} onDaySelected={e => this._setDate(e.selectedDay)}/>
         </span>
     }

@@ -64,7 +64,7 @@ class TickMiniDisplay extends React.Component<Props, State> {
     }
 
     render() {
-        return <PopupMenu name="popup"
+        return <PopupMenu name="popup" position="bottom left"
                           trigger={this._renderTrigger()}
                           items={this._typesDropDownItems}/>
     }

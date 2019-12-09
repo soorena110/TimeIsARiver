@@ -14,3 +14,10 @@
     height: 14px;
     box-shadow: 0 0 2px 1px red;
 }
+
+.tasks-of-day-top-configs-and-infos{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

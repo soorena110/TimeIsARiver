@@ -4,31 +4,36 @@ import {ApplicationState} from "../../Redux";
 import withErrorBoundary from "../../Framework/ErrorBoundry";
 import Services from "../../Services";
 import {TaskInfo, TaskType} from "../../Redux/DataState/Tasks/Models/TaskInfo";
-import computeTaskOfDate, {getDateFromDateTime} from "../_utils/dateTimeUtils";
+import computeTaskOfDate, {getDateFromDateTime, TaskView} from "../_utils/dateTimeUtils";
 import TaskRow from "./TimeRow";
 import './styles.css';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import Persian from "persian-info";
 import Calendar from "./Calendar";
 import TasksInfo from "./SelectedTaskInfo";
-import TickMiniDisplay from "../TicksPage/TickMiniDisplay";
+import TickMiniDisplay from "../Common/TickMiniDisplay";
 import TicksInfo from "./SelectedTickInfo";
-import TaskTypeSelector from "../TasksPage/TopOptions/TaskTypeSelector";
+import TaskTypeSelector from "../Common/TaskTypeSelector";
+import TickTypeSelector from "../Common/TickTypeSelector";
+import {TickInfo, TickType} from "../../Redux/DataState/Tasks/Models/TickInfo";
 
 interface Props extends RouteComponentProps<{ 'date': string }> {
     tasks?: { [id: string]: TaskInfo };
+    ticks?: { [id: string]: TickInfo };
 }
 
 interface State {
-    taskType?: TaskType;
+    showingTaskType?: TaskType;
+    showingTickType?: TickType | 'all';
 }
 
 @withErrorBoundary
 class TasksOfDay extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
-        this.state = {};
+        this.state = {showingTickType: 'all'};
         Services.tasksService.requestAllTasks();
+        Services.tasksService.requestAllTicks();
     }
 
     _getDate() {
@@ -45,10 +50,23 @@ class TasksOfDay extends React.Component<Props, State> {
             return [];
 
         const theDate = this._getDate();
-        let allTasks = (this.props.tasks as any).filter((r: TaskInfo) => Boolean(r));
-        if (this.state.taskType != undefined)
-            allTasks = allTasks.filter((r: TaskInfo) => r.type == this.state.taskType)
+        let allTasks: TaskInfo[] = (this.props.tasks as any).filter((r: TaskInfo) => Boolean(r));
+        if (this.state.showingTaskType != undefined)
+            allTasks = allTasks.filter(r => r.type == this.state.showingTaskType);
 
+        if (this.state.showingTickType != undefined) {
+            const forDate = this._getDate().toISOString().split('T')[0];
+            allTasks = allTasks.filter(task => {
+                if (!this.props.ticks) return false;
+
+                const tick = (this.props.ticks as any).find((tick?: TickInfo) => tick && tick.forDate == forDate && tick.taskId == task.id) as TickInfo;
+                const tickType = tick ? tick.type : TickType.todo;
+
+                if (this.state.showingTickType == 'all')
+                    return [TickType.todo, TickType.doing, TickType.postponed].indexOf(tickType) != -1;
+                return tickType == this.state.showingTickType;
+            });
+        }
         const currentDayStart = getDateFromDateTime(theDate);
         return computeTaskOfDate(allTasks, currentDayStart, new Date(currentDayStart.valueOf() + 24 * 3600 * 1000));
     }
@@ -72,9 +90,7 @@ class TasksOfDay extends React.Component<Props, State> {
         </thead>
     }
 
-    _renderTableBody() {
-        const taskViews = this._getTasksOfCurrentDate();
-
+    _renderTableBody(taskViews: TaskView[]) {
         return <tbody>
         {taskViews.map(taskView => {
             const task = (this.props.tasks || {})[taskView.taskId];
@@ -99,14 +115,17 @@ class TasksOfDay extends React.Component<Props, State> {
         </tbody>
     }
 
-    _renderTopConfigsAndInfos(){
-        return <div style={{position: 'relative', display: 'flex'}}>
-            <Calendar/>
+    _renderTopConfigsAndInfos() {
+        return <div className="tasks-of-day-top-configs-and-infos">
+            <span style={{margin: 5}}><Calendar/></span>
             <span style={{margin: 5}}>
-                    <TaskTypeSelector canBeUnset
-                                      selectedValue={this.state.taskType as any}
-                                      onChange={e => this.setState({taskType: e.newValue})}/>
-                </span>
+                <TaskTypeSelector canBeUnset
+                                  selectedValue={this.state.showingTaskType as any}
+                                  onChange={e => this.setState({showingTaskType: e.newValue})}/>
+                <br/>
+                <TickTypeSelector selectedValue={this.state.showingTickType}
+                                  onChange={e => this.setState({showingTickType: e.newValue})}/>
+            </span>
             <div style={{position: 'absolute', bottom: 0, left: 0}}>
                 <TicksInfo/>
                 <TasksInfo/>
@@ -114,22 +133,36 @@ class TasksOfDay extends React.Component<Props, State> {
         </div>
     }
 
+    _renderTable() {
+        const taskViews = this._getTasksOfCurrentDate();
+        if (!taskViews.length)
+            return;
+
+        return <div style={{overflow: 'auto', width: '100%'}}>
+            <div style={{minWidth: 500}}>
+                <table className="tasks-of-day" cellSpacing={0}>
+                    {this._renderTableHeader()}
+                    {this._renderTableBody(taskViews)}
+                </table>
+            </div>
+        </div>
+    }
+
     render() {
         return <>
             {this._renderTopConfigsAndInfos()}
-            <table className="tasks-of-day" cellSpacing={0}>
-                {this._renderTableHeader()}
-                {this._renderTableBody()}
-            </table>
+            {this._renderTable()}
+            <div style={{height: 200}}/>
         </>
     }
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
-    tasks: state.tasks.tasks
+    tasks: state.tasks.tasks,
+    ticks: state.tasks.ticks
 });
 export default withRouter(connect(mapStateToProps)(TasksOfDay));
 
 
 declare const module: any;
-module.hot.accept();
+module.hot.accept('./index.tsx');

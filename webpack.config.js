@@ -9,7 +9,11 @@ const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
 module.exports = () => {
     return {
         context: path.resolve(''),
-        entry: './src/boot/index.tsx',
+        entry: {
+            bundle: './src/boot/index.tsx',
+            services: './services/index.ts',
+            "service-worker": './services/service-worker/index.ts'
+        },
         module: {
             rules: [
                 {
@@ -47,7 +51,7 @@ module.exports = () => {
         },
         output: {
             path: path.join(__dirname, './public'),
-            filename: 'bundle.js'
+            filename: '[name].js'
         },
         plugins: [
             new Webpack.HotModuleReplacementPlugin(),

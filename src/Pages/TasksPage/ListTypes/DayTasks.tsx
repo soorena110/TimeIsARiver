@@ -5,7 +5,7 @@ import Services from "../../../Services";
 import {TaskInfo, TaskType} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {SorTable, SorTableColumn} from "../../../Framework";
 import commonColumns from "./commonColumns";
-import TickMiniDisplay from "../../TicksPage/TickMiniDisplay";
+import TickMiniDisplay from "../../Common/TickMiniDisplay";
 
 interface Props {
     tasks?: { [id: string]: TaskInfo };
@@ -22,6 +22,7 @@ class DayTasks extends React.Component<Props> {
         {
             accessor: 'id',
             title: '',
+            tdStyle: {minWidth: 100},
             render: id => <TickMiniDisplay taskId={id} forDate={new Date().toISOString().split('T')[0]}/>
         }
     ];

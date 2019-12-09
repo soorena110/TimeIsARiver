@@ -2,7 +2,7 @@ import * as React from "react";
 import {BoxFormFieldProps} from "react-lite-form-creator/src/Form/BoxForm/propsModels";
 import {TaskInfo, TaskType} from "../../../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {FormBuilder} from "react-lite-form-creator";
-import TaskTypeSelector from "../../TaskTypeSelector";
+import TaskTypeSelector from "../../../../Common/TaskTypeSelector";
 import Services from "../../../../../Services";
 import WeekDaysSelector from "./WeekDaysSelector";
 

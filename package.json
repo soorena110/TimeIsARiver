@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server -d"
+    "start": "webpack-dev-server -d",
+    "build": "webpack",
+    "deploy": "npm run build & node deploy.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,8 +21,9 @@
     "react-tooltip-lite": "^1.10.0",
     "redux": "^4.0.4",
     "redux-multi": "^0.1.12",
-    "redux-solid": "^0.6.2",
-    "web-event": "^0.8.3"
+    "redux-solid": "^0.6.3",
+    "web-event": "^0.8.3",
+    "react-lite-form-creator": "^1.2.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.14",
@@ -32,8 +35,8 @@
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^3.2.1",
     "file-loader": "^4.3.0",
+    "ftp-deploy": "^2.3.6",
     "progress-bar-webpack-plugin": "^1.12.1",
-    "react-lite-form-creator": "^1.2.0",
     "style-loader": "^1.0.1",
     "typescript": "^3.7.3",
     "url-loader": "^2.3.0",

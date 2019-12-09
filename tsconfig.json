@@ -14,7 +14,12 @@
     "noUnusedParameters": false,
     "inlineSources": true,
     "sourceMap": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "dom",
+      "webworker"
+    ]
   },
   "include": [
     "src/**/*"
