@@ -12,13 +12,19 @@ const ticksReducerOnReducing = (e: any) => {
 export const tasksReducer = new ReducerCreator()
     .withDictionaryReducer('tasks', 'id', {
         recreateDictionaryOnObjectChange: false,
-        isArrayDictionary: true
+        isArrayDictionary: true,
+        cachingOptions: {
+            cacheMethod: "localStorage"
+        }
     })
-    .withDictionaryReducer('ticks', 'id', {
+    .withDictionaryReducer('ticks', 'taskId', {
         recreateDictionaryOnObjectChange: false,
         isArrayDictionary: true,
         events: {
             onReducing: ticksReducerOnReducing
+        },
+        cachingOptions: {
+            cacheMethod: "localStorage"
         }
     })
     .withFlagReducer('tasks')

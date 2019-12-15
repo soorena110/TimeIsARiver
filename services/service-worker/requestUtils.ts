@@ -2,13 +2,11 @@ const cacheKey = 'timeRiver';
 const cacheablesMethods = ['GET', 'OPTIONS'];
 
 export const getResponseFromCacheOrFetch = async (request: Request) => {
-    if (!cacheablesMethods.includes(request.method) ||
+    if (request.headers.get('cache-control') === 'no-cache' ||
         request.url.includes('sockjs-node') ||
         request.url.includes('chrome-extension'))
         return fetch(request);
 
-    if (request.headers.get('cache-control') !== 'no-cache')
-        return getCacheFirstResponse(request);
     return getFetchFirstResponse(request)
 };
 
@@ -28,14 +26,14 @@ const getFetchFirstResponse = async (request: Request) => {
     }
 };
 
-const getCacheFirstResponse = async (request: Request) => {
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse)
-        return cachedResponse;
-
-    const networkResponse = await fetch(request);
-    const cache = await caches.open(cacheKey);
-    await cache.put(request, networkResponse.clone());
-
-    return networkResponse;
-};
+// const getCacheFirstResponse = async (request: Request) => {
+//     const cachedResponse = await caches.match(request);
+//     if (cachedResponse)
+//         return cachedResponse;
+//
+//     const networkResponse = await fetch(request);
+//     const cache = await caches.open(cacheKey);
+//     await cache.put(request, networkResponse.clone());
+//
+//     return networkResponse;
+// };

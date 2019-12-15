@@ -32,18 +32,18 @@ export enum WeekDay {
 }
 
 export const TaskTypeName = {
-    [TaskType.day]:'روز',
-    [TaskType.week]:'هفته',
-    [TaskType.month]:'ماه'
+    [TaskType.day]: 'روز',
+    [TaskType.week]: 'هفته',
+    [TaskType.month]: 'ماه'
 } as any;
 
 
 export const WeekDayNames = {
-    [WeekDay.saturday]:'شنبه',
-    [WeekDay.sunday]:'یکشنبه',
-    [WeekDay.monday]:'دوشنبه',
-    [WeekDay.tuesday]:'سه‌شنبه',
-    [WeekDay.wednesday]:'چهارشنبه',
-    [WeekDay.thursday]:'پنجشنبه',
-    [WeekDay.friday]:'جمعه'
+    [WeekDay.saturday]: 'شنبه',
+    [WeekDay.sunday]: 'یکشنبه',
+    [WeekDay.monday]: 'دوشنبه',
+    [WeekDay.tuesday]: 'سه‌شنبه',
+    [WeekDay.wednesday]: 'چهارشنبه',
+    [WeekDay.thursday]: 'پنجشنبه',
+    [WeekDay.friday]: 'جمعه'
 } as any;

@@ -19,7 +19,11 @@ export default class CreateOrEditForm extends React.Component<Props, State> {
         super(props);
 
         this.state = {
-            creatingOrEditingTask: {...(this.props.editingTask || {})}
+            creatingOrEditingTask: {
+                ...(this.props.editingTask || {
+                    type: TaskType.day
+                })
+            }
         };
     }
 
@@ -46,7 +50,14 @@ export default class CreateOrEditForm extends React.Component<Props, State> {
             {
                 name: 'name',
                 label: 'نام تسک',
-                type: 'string'
+                type: 'string',
+                validation: {
+                    isRequired: true,
+                    otherValidations: [{
+                        conditionChecker: e => e.values['name'] && e.values['name'].length < 4,
+                        message: 'تعداد کاراکترهای نام تسک باید حداقل 4 عدد باشد.'
+                    }]
+                }
             },
             {
                 name: 'description',

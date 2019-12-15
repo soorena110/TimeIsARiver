@@ -31,7 +31,7 @@ class DayTasks extends React.Component<Props> {
         if (!this.props.tasks)
             return 'Loading ...';
 
-        const data = (this.props.tasks as any).filter((r: TaskInfo) => r.type == TaskType.day);
+        const data = (this.props.tasks as any).filter((r?: TaskInfo) => r && r.type == TaskType.day);
         return <SorTable columns={this._columns} data={data}/>
     }
 }
