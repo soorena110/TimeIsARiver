@@ -24,7 +24,7 @@ export function computeTaskOfDateForWeek(tasks: TaskInfo[], ticks: TickInfo[], s
 
 const getTaskTick = (taskId: number, ticks: TickInfo[], startDate: Date) => {
     const forDate = startDate.toISOString().split('T')[0];
-    return ticks.find(t => t._unique == getTickUniqueId({taskId, forDate}))
+    return ticks.find(t => t.taskId == taskId && t.forDate == forDate);
 };
 
 const computeToleranceMinutes = (task: TaskInfo) => {

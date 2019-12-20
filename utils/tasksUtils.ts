@@ -37,15 +37,7 @@ export default function computeTaskOfDate(tasks: TaskInfo[], ticks: TickInfo[], 
 
 
 function filterCommons(tasks: TaskInfo[], startDate: Date, endDate: Date) {
-    return tasks.filter(r => {
-        if (r.start && new Date(r.start) > endDate)
-            return false;
-
-        // if (r.end && r.type != TaskType.day && (new Date(r.end) < endDate))
-        //     return false;
-
-        return true;
-    })
+    return tasks.filter(r => !(r.start && new Date(r.start) > endDate))
 }
 
 

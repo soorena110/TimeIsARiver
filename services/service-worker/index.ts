@@ -1,7 +1,7 @@
 import {getResponseFromCacheOrFetch} from "./requestUtils";
 import fetchTasksAndTicksFromServer from "./taskOperations/fetchTasksAndTicksFromServer";
 import getWarningTasks from "./taskOperations/getWarningTasks";
-import showTaskNotification from "./taskOperations/showTaskNotification";
+import showTaskNotification from "./taskOperations/showTasksNotification";
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -11,11 +11,7 @@ self.addEventListener('activate', (e: any) => {
     const checkNotificationStatus = async () => {
         await fetchTasksAndTicksFromServer();
         const taskViews = await getWarningTasks();
-        for (const tv of taskViews)
-            if (tv.toleranceMinutes == 15)
-                await showTaskNotification(tv, 'info');
-            else if (tv.toleranceMinutes <= 0)
-                await showTaskNotification(tv, 'warning');
+        await showTaskNotification(taskViews);
     };
 
     setInterval(checkNotificationStatus, 60000);
