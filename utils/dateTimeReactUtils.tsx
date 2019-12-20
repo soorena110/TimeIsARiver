@@ -1,17 +1,6 @@
 import Persian from "persian-info";
 import * as React from "react";
 
-export const numberToHour = (num?: number) => {
-    if (num == undefined)
-        return num;
-    const hours = Math.floor(num);
-    const minutes = Math.round((num - hours) * 60);
-
-    if (hours)
-        return `${hours}h ${minutes}m`;
-    else return `${minutes}m`;
-};
-
 export function convertToJalaliDateTime(dateTime: any) {
     if (!dateTime)
         return;

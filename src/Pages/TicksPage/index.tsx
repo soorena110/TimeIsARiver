@@ -9,7 +9,7 @@ import {TaskInfo} from "../../Redux/DataState/Tasks/Models/TaskInfo";
 import {TickInfo, TickType} from "../../Redux/DataState/Tasks/Models/TickInfo";
 import Services from "../../Services";
 import TasksInfo from "../TasksOfDay/SelectedTaskInfo";
-import {convertToJalaliDateTime} from "../../../utils";
+import {convertToJalaliDateTime} from "../../../utils/dateTimeReactUtils";
 import TickMiniDisplay from "../Common/TickMiniDisplay";
 import TickTypeSelector from "../Common/TickTypeSelector";
 

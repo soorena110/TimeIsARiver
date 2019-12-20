@@ -19,11 +19,20 @@ export interface TaskView {
 export default function computeTaskOfDate(tasks: TaskInfo[], ticks: TickInfo[], startDate: Date, endDate: Date): TaskView[] {
     tasks = filterCommons(tasks, startDate, endDate);
 
-    return [
+    const taskViews = [
         ...computeTaskOfDateForDay(tasks.filter(r => r.type == TaskType.day), ticks, startDate, endDate),
         ...computeTaskOfDateForWeek(tasks.filter(r => r.type == TaskType.week), ticks, startDate, endDate),
         ...computeTaskOfDateForMonth(tasks.filter(r => r.type == TaskType.month), ticks, startDate, endDate)
-    ]
+    ];
+
+    taskViews.sort((m, n) => {
+        if (m.endHour == n.endHour) return 0;
+        if (!m.endHour) return 1;
+        if (!n.endHour) return -1;
+
+        return m.endHour > n.endHour ? 1 : -1;
+    });
+    return taskViews;
 };
 
 

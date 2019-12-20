@@ -4,6 +4,7 @@ import {TaskView} from "./tasksUtils";
 import {TickInfo} from "../src/Redux/DataState/Tasks/Models/TickInfo";
 
 export function computeTaskOfDateForDay(tasks: TaskInfo[], ticks: TickInfo[], startDate: Date, endDate: Date) {
+    tasks = tasks.filter(t => !t.start || new Date(t.start) < endDate);
 
     return tasks.map(task => {
         const ret: TaskView = {
@@ -27,8 +28,9 @@ const getTaskTick = (taskId: number, ticks: TickInfo[]) => {
 
 
 const computeEndHour = (task: TaskInfo, startDate: Date, endDate: Date) => {
-    if (!task.end)
-        return;
+    if (!task.end) return;
+    if(new Date(task.end) > endDate) return;
+
     if (new Date(task.end) > startDate && new Date(task.end) < endDate)
         return getHourFromDateTime(task.end);
     return '00:58'

@@ -18,7 +18,7 @@ self.addEventListener('activate', (e: any) => {
                 await showTaskNotification(tv, 'warning');
     };
 
-    setInterval(checkNotificationStatus, 6000);
+    setInterval(checkNotificationStatus, 60000);
     checkNotificationStatus().catch(e => console.error(e));
 });
 
