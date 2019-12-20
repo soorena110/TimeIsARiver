@@ -1,6 +1,4 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {ApplicationState} from "../../Redux";
 import {TaskType} from "../../Redux/DataState/Tasks/Models/TaskInfo";
 import DayTasks from "./ListTypes/DayTasks";
 import MonthTasks from "./ListTypes/MonthTasks";
@@ -55,4 +53,5 @@ export default class TasksPage extends React.Component<any, State> {
 
 
 declare const module: any;
-module.hot.accept('./index.tsx');
+if (module.hot)
+    module.hot.accept('./index.tsx');

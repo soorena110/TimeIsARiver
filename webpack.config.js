@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const Webpack = require('webpack');
 const ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin');
 
-module.exports = () => {
+module.exports = (env) => {
     return {
         context: path.resolve(''),
         entry: {
@@ -47,19 +47,20 @@ module.exports = () => {
             ]
         },
         resolve: {
-            extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
+            extensions: ['*', '.tsx', '.ts', '.js', '.js']
         },
         output: {
             path: path.join(__dirname, './public'),
             filename: '[name].js',
-            globalObject: 'this'
+            globalObject: 'this',
+            sourceMapFilename: "[name].map.js"
         },
-        plugins: [
+        plugins: env && env.dev ? [
             new Webpack.HotModuleReplacementPlugin(),
             new ProgressBarWebpackPlugin({
                 format: `→  build ${chalk.yellow.bold(':percent')} (${chalk.green.bold(':elapsed seconds')})`,
             })
-        ],
+        ] : [],
         devServer: {
             contentBase: './public',
             hot: true,
@@ -68,7 +69,7 @@ module.exports = () => {
             host: '0.0.0.0',
             historyApiFallback: true
         },
-        devtool: 'inline-source-map',
+        devtool: 'source-map',
         stats: {
             all: false,
             modules: true,

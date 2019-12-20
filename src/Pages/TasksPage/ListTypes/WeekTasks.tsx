@@ -5,7 +5,7 @@ import Services from "../../../Services";
 import {TaskInfo, TaskType} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {SorTable, SorTableColumn} from "../../../Framework";
 import commonColumns from "./commonColumns";
-import {convertNumberToWeekDays} from "../../_utils";
+import {convertNumberToWeekDays} from "../../../../utils/weekTaskUtils";
 
 interface Props {
     tasks?: { [id: string]: TaskInfo };

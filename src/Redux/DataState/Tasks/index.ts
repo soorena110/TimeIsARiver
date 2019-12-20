@@ -1,12 +1,17 @@
 import {ReducerCreator} from "redux-solid";
 import defaultState from "./defaultState";
-import {TickInfo} from "./Models/TickInfo";
+import {getTickUniqueId, TickInfo} from "./Models/TickInfo";
 
 const ticksReducerOnReducing = (e: any) => {
     let {data} = e.action;
     if (!data) return;
+
     data = Array.isArray(data) ? data : [data];
-    data.forEach((d: TickInfo) => d.forDate = d.forDate.split('T')[0])
+    
+    data.forEach((d: TickInfo) => {
+        d.forDate = d.forDate.split('T')[0];
+        d._unique = getTickUniqueId(d);
+    })
 };
 
 export const tasksReducer = new ReducerCreator()
@@ -17,7 +22,7 @@ export const tasksReducer = new ReducerCreator()
             cacheMethod: "localStorage"
         }
     })
-    .withDictionaryReducer('ticks', 'taskId', {
+    .withDictionaryReducer('ticks', '_unique', {
         recreateDictionaryOnObjectChange: false,
         isArrayDictionary: true,
         events: {

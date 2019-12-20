@@ -2,6 +2,7 @@ import * as React from "react";
 import './styles.css';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import Persian from "persian-info";
+import {getDateFromDateTime} from "../../../../utils/dateTimeUtils";
 
 interface Props extends RouteComponentProps<{ 'date': string }> {
 }
@@ -24,7 +25,7 @@ class NowIndicator extends React.Component<Props> {
     _getDate() {
         const theDateString = this.props.match.params.date;
         if (!theDateString)
-            return new Date();
+            return getDateFromDateTime(new Date());
 
         const [year, month, day] = theDateString.split('-').map(r => parseInt(r));
         return Persian.date.convertJalaliToGregorian({year, month, day})
@@ -40,7 +41,3 @@ class NowIndicator extends React.Component<Props> {
 }
 
 export default withRouter(NowIndicator)
-
-
-declare const module: any;
-module.hot.accept();

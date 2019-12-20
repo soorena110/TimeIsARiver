@@ -28,7 +28,3 @@ class Calendar extends React.Component<Props> {
 }
 
 export default withRouter(Calendar);
-
-
-declare const module: any;
-module.hot.accept();

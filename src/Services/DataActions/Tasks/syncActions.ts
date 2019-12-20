@@ -1,7 +1,7 @@
-import {tasks_create, tasks_delete, tasks_update, ticks_update} from "../../SourceManament/Sync/DexieDB";
+import {tasks_create, tasks_delete, tasks_update, ticks_update} from "../../../../sync/DexieDB";
 import Ajaxious from "ajaxious";
 import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
-import {TickInfo} from "../../../Redux/DataState/Tasks/Models/TickInfo";
+import {getTickUniqueId, TickInfo} from "../../../Redux/DataState/Tasks/Models/TickInfo";
 
 
 export const syncActions = {
@@ -18,13 +18,12 @@ export const syncActions = {
 };
 
 const syncDeletingTasks = async () => {
-
     const deletingTasks: TaskInfo[] = await tasks_delete.toArray();
     for (let task of deletingTasks) {
         const res = await Ajaxious.delete('task/' + task.id, task);
         if (res.status <= 0) {
             await tasks_delete.delete(task.id);
-            await ticks_update.delete(task.id);
+            await ticks_update.delete({taskId: task.id});
         }
     }
 };
@@ -51,6 +50,7 @@ const syncCreatingTasks = async () => {
             const tick: TickInfo = await ticks_update.get(prevTaskId);
             if (tick) {
                 tick.taskId = newTask.id;
+                tick._unique = getTickUniqueId(tick);
                 await ticks_update.update(prevTaskId, tick);
             }
             await tasks_create.delete(task.name);
@@ -59,10 +59,11 @@ const syncCreatingTasks = async () => {
 };
 
 const syncUpdatingTicks = async () => {
-    const updatingTicks: any[] = await ticks_update.toArray();
-    for (let task of updatingTicks) {
-        const res = await Ajaxious.put('/ticks', task);
+    const updatingTicks: Partial<TickInfo>[] = await ticks_update.toArray();
+    for (let tick of updatingTicks) {
+        delete tick._unique;
+        const res = await Ajaxious.put('/ticks', tick);
         if (res.status > 0)
-            await ticks_update.delete(task.taskId);
+            await ticks_update.delete(getTickUniqueId(tick as any));
     }
 };

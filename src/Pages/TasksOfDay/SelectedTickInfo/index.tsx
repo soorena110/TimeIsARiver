@@ -4,7 +4,6 @@ import './style.css';
 import {ApplicationState} from "../../../Redux";
 import withErrorBoundary from "../../../Framework/ErrorBoundry";
 import {DateTime} from "../../../Framework";
-import {convertNumberToWeekDays} from "../../_utils";
 import {TickInfo, TickTypeNames} from "../../../Redux/DataState/Tasks/Models/TickInfo";
 
 interface Props {
@@ -36,7 +35,3 @@ const mapStateToProps = (state: ApplicationState) => {
     }
 };
 export default connect(mapStateToProps)(TicksInfo);
-
-
-declare const module: any;
-module.hot.accept();

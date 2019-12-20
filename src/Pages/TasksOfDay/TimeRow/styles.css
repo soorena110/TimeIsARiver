@@ -23,6 +23,56 @@
     )
 }
 
+.task-row.warned {
+    background: repeating-linear-gradient(
+            90deg,
+            #f5e59a,
+            #f5e59a 4.167%,
+            #f5bc48 4.167%,
+            #f5bc48 8.334%
+    )
+}
+
+.task-row.done {
+    background: repeating-linear-gradient(
+            90deg,
+            #b1f5ef,
+            #b1f5ef 4.167%,
+            #57dbf5 4.167%,
+            #57dbf5 8.334%
+    )
+}
+
+.task-row.doing {
+    background: repeating-linear-gradient(
+            90deg,
+            #c4eec6,
+            #c4eec6 4.167%,
+            #a4caa6 4.167%,
+            #a4caa6 8.334%
+    )
+}
+
+.task-row.canceled {
+    background: repeating-linear-gradient(
+            90deg,
+            #f5908e,
+            #f5908e 4.167%,
+            #f55047 4.167%,
+            #f55047 8.334%
+    )
+}
+
+.task-row.postponed {
+    background: repeating-linear-gradient(
+            90deg,
+            #f5d396,
+            #f5d396 4.167%,
+            #f5d658 4.167%,
+            #f5d658 8.334%
+    )
+}
+
 .task-row-icon {
     background: white;
     top: 0;
@@ -30,7 +80,7 @@
     position: absolute;
     display: inline-flex !important;
     height: 100%;
-    width: 4.167%;
+    width: 2%;
     justify-content: center;
     align-items: center;
 }
@@ -61,5 +111,6 @@
     border-top: solid 4px #8069c9;
     border-bottom: solid 4px #8069c9;
     justify-content: center;
+    border-radius: 0;
     align-items: center;
 }

@@ -11,6 +11,7 @@ export default function Layout(props: any) {
     if (!syncIsDone) {
         Services.tasksService.syncTaskAndTicksChangesToServer().then(() => {
             setSyncIsDone(true);
+            requestNotifictaionPermission();
         });
         return <div>syncing</div>;
     }
@@ -24,3 +25,11 @@ export default function Layout(props: any) {
         </div>
     </div>
 }
+
+
+const requestNotifictaionPermission = () => {
+    if (!('serviceWorker' in navigator))
+        return console.error('push notification system does not exist.');
+
+    return Notification.requestPermission();
+};

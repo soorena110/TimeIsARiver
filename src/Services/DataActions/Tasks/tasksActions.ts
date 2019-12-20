@@ -1,8 +1,7 @@
 import Ajaxious from "ajaxious";
 import {dispatch, getState} from "../../../Redux";
 import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
-import DexieDB from "../../SourceManament/Sync/DexieDB";
-import {addSyncTag, addTaskToSyncs} from "../../SourceManament/Sync/utils";
+import {addTaskToSyncs} from "../../../../sync/utils";
 
 let taskCounter = 999999;
 

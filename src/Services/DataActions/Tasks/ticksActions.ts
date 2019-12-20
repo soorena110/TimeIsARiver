@@ -1,22 +1,22 @@
 import Ajaxious from "ajaxious";
 import {dispatch, getState} from "../../../Redux";
 import {TickInfo, TickType} from "../../../Redux/DataState/Tasks/Models/TickInfo";
-import {addTaskToSyncs, addTickToSyncs} from "../../SourceManament/Sync/utils";
+import {addTaskToSyncs, addTickToSyncs} from "../../../../sync/utils";
 
 export const ticksActions = {
     requestAllTicks: () => {
-        if (getState().tasks.ticks || getState().tasks.ticks_flag['all'])
+        if (getState().tasks.ticks_flag['loaded_all'] || getState().tasks.ticks_flag['requesting_all'])
             return;
 
-        dispatch({type: 'flag_ticks', key: 'all'});
+        dispatch({type: 'flag_ticks', key: 'requesting_all'});
         return Ajaxious.get('/ticks').then(res => {
-            const unflagAction = {type: 'unflag_ticks', key: 'all'};
             if (res.isSuccess) {
                 dispatch([
                     {type: 'set_ticks', data: res.data},
-                    unflagAction
+                    {type: 'unflag_ticks', key: 'requesting_all'},
+                    {type: 'flag_ticks', key: 'loaded_all'}
                 ]);
-            } else dispatch(unflagAction);
+            } else dispatch({type: 'unflag_ticks', key: 'requesting_all'});
 
             return res;
         });

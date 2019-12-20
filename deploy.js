@@ -1,6 +1,8 @@
 var FtpDeploy = require("ftp-deploy");
 var ftpDeploy = new FtpDeploy();
 
+console.log('Start deploying to server ...');
+
 var config = {
     user: "time",
     password: "&l4bP65i",
@@ -13,5 +15,5 @@ var config = {
 };
 
 ftpDeploy.deploy(config)
-    .then(res => console.log("finished:", res))
+    .then(res => console.log("finished:", res.length))
     .catch(err => console.log(err));

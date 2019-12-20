@@ -5,7 +5,7 @@ import {ApplicationState} from "../../../Redux";
 import withErrorBoundary from "../../../Framework/ErrorBoundry";
 import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {DateTime} from "../../../Framework";
-import {convertNumberToWeekDays} from "../../_utils";
+import {convertNumberToWeekDays} from "../../../../utils/weekTaskUtils";
 
 interface Props {
     task?: TaskInfo;
@@ -41,7 +41,3 @@ const mapStateToProps = (state: ApplicationState) => {
     }
 };
 export default connect(mapStateToProps)(TasksInfo);
-
-
-declare const module: any;
-module.hot.accept();

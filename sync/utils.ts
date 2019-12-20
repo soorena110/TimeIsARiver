@@ -1,6 +1,6 @@
-import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
+import {TaskInfo} from "../src/Redux/DataState/Tasks/Models/TaskInfo";
 import {tasks_create, tasks_delete, tasks_update, ticks_update} from "./DexieDB";
-import {TickInfo} from "../../../Redux/DataState/Tasks/Models/TickInfo";
+import {getTickUniqueId} from "../src/Redux/DataState/Tasks/Models/TickInfo";
 
 export const addSyncTag = async (tag: string) => {
     if (!('serviceWorker' in navigator && 'syncManager' in window))
@@ -16,7 +16,7 @@ export const addSyncTag = async (tag: string) => {
 export const addTaskToSyncs = async (action: 'create' | 'delete' | 'update', task: Partial<TaskInfo>) => {
     let prevCreateTask = (await tasks_create.toArray()).find(t => t.id == task.id);
     let prevUpdateTask = await tasks_update.get(task.id);
-    let prevTickOfTask = await ticks_update.get(task.id);
+    let prevTickOfTask = ticks_update.where('taskId').equals(task.id as any);
 
     switch (action) {
         case "create":
@@ -37,15 +37,16 @@ export const addTaskToSyncs = async (action: 'create' | 'delete' | 'update', tas
 
             if (prevUpdateTask)
                 await tasks_update.delete(task.id);
-            if (prevTickOfTask)
-                await ticks_update.delete(task.id);
+            if (await prevTickOfTask.count())
+                await prevTickOfTask.delete();
             break;
     }
     await addSyncTag('taskChange');
 };
 
 
-export const addTickToSyncs = async (action: 'update', task: Partial<TickInfo>) => {
-    await ticks_update.put(task);
+export const addTickToSyncs = async (action: 'update', tick: any) => {
+    tick._unique = getTickUniqueId(tick);
+    await ticks_update.put(tick);
     await addSyncTag('taskChange');
 };

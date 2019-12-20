@@ -13,6 +13,8 @@ export interface TickInfo {
     end: string;
     postponeEnd: string;
     lastUpdate: string;
+
+    _unique?: string;
 }
 
 export enum TickType {
@@ -46,3 +48,5 @@ export const TickTypeColors = {
     [TickType.canceled]: 'red',
     [TickType.postponed]: 'orange'
 } as any;
+
+export const getTickUniqueId = (tick: { taskId: number, forDate: string }) => `${tick.taskId}_${tick.forDate}`;

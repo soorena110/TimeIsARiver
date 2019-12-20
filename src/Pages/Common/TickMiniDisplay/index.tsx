@@ -70,11 +70,12 @@ class TickMiniDisplay extends React.Component<Props, State> {
     }
 }
 
-const mapStateToProps = (state: ApplicationState, ownProps: { taskId: number, forDate: string, taskType?: TaskType }) => {
-    const tick = (state.tasks.ticks as any || []).find((r: TickInfo) => r && r.taskId == ownProps.taskId &&
-        (ownProps.taskType == TaskType.day || r.forDate == ownProps.forDate));
-    return {
-        tick
-    }
+const mapStateToProps = (state: ApplicationState, ownProps: { taskId: number, forDate: string }) => {
+    const task = (state.tasks.tasks || {})[ownProps.taskId] || {};
+    const tick = Object.values(state.tasks.ticks || {})
+        .find((r: TickInfo) => r && r.taskId == ownProps.taskId &&
+            (task.type == TaskType.day || r.forDate == ownProps.forDate));
+
+    return {tick}
 };
 export default connect(mapStateToProps)(TickMiniDisplay);

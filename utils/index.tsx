@@ -12,17 +12,6 @@ export const numberToHour = (num?: number) => {
     else return `${minutes}m`;
 };
 
-export function convertNumberToWeekDays(weekDaysNumber?: number): number[] {
-    if (!weekDaysNumber)
-        return [];
-
-    return (weekDaysNumber >>> 0).toString(2)
-        .split('')
-        .reverse()
-        .map((r, ix) => r == '1' ? ix : -1)
-        .filter(n => n != -1);
-}
-
 export function convertToJalaliDateTime(dateTime: any) {
     if (!dateTime)
         return;

@@ -9,7 +9,7 @@ import {TaskInfo} from "../../Redux/DataState/Tasks/Models/TaskInfo";
 import {TickInfo, TickType} from "../../Redux/DataState/Tasks/Models/TickInfo";
 import Services from "../../Services";
 import TasksInfo from "../TasksOfDay/SelectedTaskInfo";
-import {convertToJalaliDateTime} from "../_utils";
+import {convertToJalaliDateTime} from "../../../utils";
 import TickMiniDisplay from "../Common/TickMiniDisplay";
 import TickTypeSelector from "../Common/TickTypeSelector";
 
@@ -90,7 +90,7 @@ class TicksPage extends React.Component<Props, State> {
         if (!this.props.ticks)
             return [];
 
-        let ret = (this.props.ticks as any).filter((r: TaskInfo) => Boolean(r)) as TickInfo[];
+        let ret = Object.values(this.props.ticks) as TickInfo[];
         if (this.state.showingTickType != undefined)
             ret = ret.filter(r => r.type == this.state.showingTickType);
 
@@ -118,6 +118,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 export default connect(mapStateToProps)(TicksPage);
 
 
-
 declare const module: any;
-module.hot.accept('./index.tsx');
+if (module.hot)
+    module.hot.accept('./index.tsx');

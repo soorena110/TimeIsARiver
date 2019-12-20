@@ -1,9 +1,25 @@
 import {getResponseFromCacheOrFetch} from "./requestUtils";
+import fetchTasksAndTicksFromServer from "./taskOperations/fetchTasksAndTicksFromServer";
+import getWarningTasks from "./taskOperations/getWarningTasks";
+import showTaskNotification from "./taskOperations/showTaskNotification";
 
+declare const self: ServiceWorkerGlobalScope;
 
 self.addEventListener('install', (e: any) => {
 });
 self.addEventListener('activate', (e: any) => {
+    const checkNotificationStatus = async () => {
+        await fetchTasksAndTicksFromServer();
+        const taskViews = await getWarningTasks();
+        for (const tv of taskViews)
+            if (tv.toleranceMinutes == 15)
+                await showTaskNotification(tv, 'info');
+            else if (tv.toleranceMinutes <= 0)
+                await showTaskNotification(tv, 'warning');
+    };
+
+    setInterval(checkNotificationStatus, 6000);
+    checkNotificationStatus().catch(e => console.error(e));
 });
 
 self.addEventListener('fetch', (e: FetchEvent) => {
@@ -15,3 +31,9 @@ self.addEventListener('fetch', (e: FetchEvent) => {
 self.addEventListener('sync', (e: SyncEvent) => {
 
 });
+
+self.addEventListener('notificationclick', (e: NotificationEvent) => {
+    e.notification.close();
+    if (!e.action) self.clients.openWindow('/')
+});
+

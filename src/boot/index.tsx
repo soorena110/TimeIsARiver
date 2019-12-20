@@ -25,4 +25,5 @@ render(
 );
 
 declare const module: any;
-module.hot.accept('./index.tsx');
+if (module.hot)
+    module.hot.accept('./index.tsx');
