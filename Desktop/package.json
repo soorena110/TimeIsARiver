@@ -2,15 +2,17 @@
   "name": "timeriver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron -r babel-register ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "electron": "^7.1.9",
-    "electron-window-state": "^5.0.3"
+    "electron-window-state": "^5.0.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
   },
   "devDependencies": {
     "devtron": "^1.4.0"
