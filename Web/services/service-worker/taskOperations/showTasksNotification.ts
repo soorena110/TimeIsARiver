@@ -49,7 +49,7 @@ const notifyTask = async (taskView: TaskView, type: 'info' | 'warning') => {
         renotify: true,
         actions
     });
-}
+};
 
 const checkPermissions = async () => {
     if (!navigator.permissions) return false;

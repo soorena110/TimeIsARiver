@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Time is a River :)</title>
+</head>
+<body style="height: 100%; margin:0">
+<iframe src="http://localhost:7000" style="border:none;height:100%;width:100%"></iframe>
+<script>
+    const {ipcRenderer} = require('electron');
+    window.onmessage = e => {
+        ipcRenderer.send(e.data.type, e.data.content);
+    };
+</script>
+</body>
+</html>
