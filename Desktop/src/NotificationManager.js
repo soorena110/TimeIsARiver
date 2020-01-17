@@ -1,7 +1,6 @@
 import {ipcMain} from 'electron';
 import eNotify from 'electron-notify';
 import path from 'path';
-import {Howl} from 'howler';
 
 
 const showMainWindowVisibility = () => {
@@ -11,13 +10,10 @@ const showMainWindowVisibility = () => {
 
 const notify = (content) => {
     eNotify.notify({
-        title: content.title + '<span style="color:gray; float: left">' + content.remainingTime + 'دقیقه' + '</span>',
+        title: content.title +
+            '<span style="color:gray; float: left">' + content.remainingTime + 'دقیقه' + '</span>',
         text: content.description,
-        sound: path.join(__dirname, '../../Common/Sound/eventually.wav'),
-        onClickFunc() {
-            showMainWindowVisibility();
-            this.hide();
-        }
+        onClickFunc: () => showMainWindowVisibility() || this.hide()
     });
 };
 
@@ -78,13 +74,6 @@ const NotificationManager = {
         eNotify.setConfig(notificationConfig);
 
         ipcMain.on('notify', (e, content) => notify(content));
-        const sound = new Howl({
-            src: ['./eventually.mp3'],
-            autoplay: true,
-            loop: true,
-            volume: 0.5,
-        });
-        sound.play();
     }
 };
 
