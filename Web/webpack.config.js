@@ -30,7 +30,7 @@ module.exports = (env) => {
                     exclude: /node_modules/
                 },
                 {
-                    test: /\.(jpe?g|png|gif)(\?[a-z0-9=.]+)?$/,
+                    test: /\.(jpe?g|png|gif|snd)(\?[a-z0-9=.]+)?$/,
                     loader: 'url-loader',
                     options: {
                         limit: 5000,

@@ -27,3 +27,16 @@ render(
 declare const module: any;
 if (module.hot)
     module.hot.accept('./index.tsx');
+
+
+const t = {
+    title: 'نام تسک',
+    description: 'توضیحات که اینجاسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس',
+    remainingTime: 300,
+};
+setInterval(() => {
+    window.parent.postMessage({type: 'notify', content: t}, '*');
+    const audio = new Audio(require('./eventually.snd'));
+    audio.play();
+}, 10000);
+

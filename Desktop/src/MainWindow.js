@@ -34,8 +34,6 @@ const hideInsteadOfClose = e => {
 
 const MainWindow = {
     create() {
-        require('devtron').install();
-
         const mainWindow = createMainWindow();
         mainWindow.on('close', hideInsteadOfClose);
 

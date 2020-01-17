@@ -1,12 +1,12 @@
 import TrayManager from "./TrayManager";
 import MainWindow from "./MainWindow";
 
-const {app, ipcMain} = require('electron');
-
+const {app} = require('electron');
 
 app.on('ready', () => {
+    require('devtron').install();
+
     TrayManager.create();
     MainWindow.create();
-
-    ipcMain.on('notify', (e, content) => console.log(content))
+    require('./NotificationManager').default.start();
 });
