@@ -17,10 +17,11 @@ const createMainWindow = () => {
             allowRunningInsecureContent: true,
             nodeIntegration: true
         },
+        show: false
     });
     prevState.manage(mainWindow);
     mainWindow.loadFile('./src/index.html');
-    // mainWindow.loadURL('http://localhost:7000');
+    mainWindow.hide();
     return mainWindow;
 };
 

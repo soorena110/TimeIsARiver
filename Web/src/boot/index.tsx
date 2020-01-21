@@ -6,6 +6,7 @@ import reduxStore from "../Redux";
 import Routes from "./Router";
 import Layout from "../Pages/Layout";
 import "./style.css";
+import Services from "../Services";
 
 class MainApplication extends React.Component {
     render() {
@@ -28,15 +29,5 @@ declare const module: any;
 if (module.hot)
     module.hot.accept('./index.tsx');
 
-
-const t = {
-    title: 'نام تسک',
-    description: 'توضیحات که اینجاسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس',
-    remainingTime: 300,
-};
-setInterval(() => {
-    window.parent.postMessage({type: 'notify', content: t}, '*');
-    const audio = new Audio(require('./eventually.snd'));
-    audio.play();
-}, 10000);
+Services.backgroundService.startCheckingTasksNotification();
 

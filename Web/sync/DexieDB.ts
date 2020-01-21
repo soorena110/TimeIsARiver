@@ -16,6 +16,3 @@ export const ticks_update = DexieDB.table('ticks_update');
 export const tasks_create = DexieDB.table('tasks_create');
 export const tasks_update = DexieDB.table('tasks_update');
 export const tasks_delete = DexieDB.table('tasks_delete');
-
-export const tasksDB = DexieDB.table('tasks');
-export const ticksDB = DexieDB.table('ticks');

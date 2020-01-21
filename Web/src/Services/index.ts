@@ -1,10 +1,12 @@
 import {initServerSetting} from "../../utils/ajaxiousInit";
 import {tasksService} from "./DataActions/Tasks";
 import {pagesService} from "./PagesActions";
+import {backgroundService} from "./BackgroundActions";
 
 const Services = {
     tasksService,
-    pagesService
+    pagesService,
+    backgroundService
 };
 
 initServerSetting();
