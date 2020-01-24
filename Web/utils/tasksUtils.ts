@@ -17,6 +17,7 @@ export interface TaskView {
 }
 
 export default function computeTaskOfDate(tasks: TaskInfo[], ticks: TickInfo[], startDate: Date, endDate: Date): TaskView[] {
+    tasks = tasks.filter(Boolean);
     tasks = filterCommons(tasks, startDate, endDate);
 
     const taskViews = [

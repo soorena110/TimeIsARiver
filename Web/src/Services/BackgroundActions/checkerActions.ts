@@ -40,7 +40,7 @@ const getWarningTasks = () => {
     const taskViews = computeTaskOfDate(tasks, ticks, currentDayStart, new Date(currentDayStart.valueOf() + 24 * 3600 * 1000));
 
     return taskViews.filter(tv => {
-        if (tv.tick?.type != TickType.todo)
+        if (tv.tick && tv.tick?.type != TickType.todo)
             return false;
         return tv.toleranceMinutes <= 15;
     });

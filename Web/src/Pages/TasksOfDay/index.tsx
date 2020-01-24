@@ -33,8 +33,8 @@ class TasksOfDay extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.state = {showingTickType: 'all'};
-        Services.tasksService.requestAllTasks();
-        Services.tasksService.requestAllTicks();
+        Services.tasksService.startRequestingTasks();
+        Services.tasksService.startRequestingTicks();
     }
 
     _getDate() {

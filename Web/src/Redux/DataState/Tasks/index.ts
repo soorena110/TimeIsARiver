@@ -24,7 +24,7 @@ export const tasksReducer = new ReducerCreator()
     })
     .withDictionaryReducer('ticks', '_unique', {
         recreateDictionaryOnObjectChange: false,
-        isArrayDictionary: true,
+        isArrayDictionary: false,
         events: {
             onReducing: ticksReducerOnReducing
         },

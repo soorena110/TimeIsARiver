@@ -4,24 +4,12 @@ import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {addTaskToSyncs} from "../../../../sync/utils";
 
 let taskCounter = 999999;
+let requestInterval;
 
 export const tasksActions = {
-    async requestAllTasks() {
-        if (getState().tasks.tasks_flag['loaded_all'] || getState().tasks.tasks_flag['requesting_all'])
-            return;
-
-        dispatch({type: 'flag_tasks', key: 'requesting_all'});
-        const res = await Ajaxious.get('/tasks');
-
-        if (res.isSuccess) {
-            dispatch([
-                {type: 'set_tasks', data: res.data},
-                {type: 'unflag_tasks', key: 'requesting_all'},
-                {type: 'flag_tasks', key: 'loaded_all'}
-            ]);
-        } else dispatch({type: 'unflag_tasks', key: 'requesting_all'});
-
-        return res;
+    async startRequestingTasks() {
+        requestInterval = setInterval(requestAllTasks, 40000);
+        await requestAllTasks();
     },
 
     async deleteTask(id: number) {
@@ -86,4 +74,21 @@ export const tasksActions = {
 
         return res;
     }
+};
+
+const requestAllTasks = async () => {
+    if (getState().tasks.tasks_flag['requesting_all'])
+        return;
+
+    dispatch({type: 'flag_tasks', key: 'requesting_all'});
+    const res = await Ajaxious.get('/tasks');
+
+    if (res.isSuccess) {
+        dispatch([
+            {type: 'set_tasks', data: res.data},
+            {type: 'unflag_tasks', key: 'requesting_all'},
+        ]);
+    } else dispatch({type: 'unflag_tasks', key: 'requesting_all'});
+
+    return res;
 };

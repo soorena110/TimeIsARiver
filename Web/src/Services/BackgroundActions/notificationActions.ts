@@ -12,7 +12,9 @@ interface NotificationInfo {
 export const notificationActions = {
     async notify(notification: NotificationInfo) {
 
-        new Audio(alarmSound).play();
+        const audio = new Audio(alarmSound);
+        audio.autoplay = true;
+        audio.play().catch(() => console.log('sound not played'));
         window.parent.postMessage({type: 'notify', content: notification}, '*');
 
         if (notification.type == 'remove')

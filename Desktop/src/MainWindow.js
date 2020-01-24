@@ -1,5 +1,5 @@
-import windowStateKeeper from "electron-window-state";
-import {BrowserWindow} from 'electron'
+const windowStateKeeper = require("electron-window-state");
+const {BrowserWindow} = require('electron');
 
 const createMainWindow = () => {
     const prevState = windowStateKeeper({
@@ -43,4 +43,4 @@ const MainWindow = {
 };
 
 
-export default MainWindow;
+module.exports = MainWindow;

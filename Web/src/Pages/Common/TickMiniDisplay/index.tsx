@@ -29,7 +29,7 @@ interface State {
 class TickMiniDisplay extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        Services.tasksService.requestAllTicks();
+        Services.tasksService.startRequestingTicks();
     }
 
     _typesDropDownItems: DropDownItem[] = [TickType.todo, TickType.doing, TickType.done, TickType.canceled, TickType.postponed]

@@ -14,7 +14,7 @@ interface Props {
 class DayTasks extends React.Component<Props> {
     constructor(props: any) {
         super(props);
-        Services.tasksService.requestAllTasks()
+        Services.tasksService.startRequestingTasks()
     }
 
     _columns: SorTableColumn<TaskInfo>[] = [

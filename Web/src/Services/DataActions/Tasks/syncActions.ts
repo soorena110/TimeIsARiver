@@ -3,17 +3,23 @@ import Ajaxious from "ajaxious";
 import {TaskInfo} from "../../../Redux/DataState/Tasks/Models/TaskInfo";
 import {getTickUniqueId, TickInfo} from "../../../Redux/DataState/Tasks/Models/TickInfo";
 
-
+let requestInterval;
 export const syncActions = {
     async syncTaskAndTicksChangesToServer() {
-        try {
-            await syncCreatingTasks();
-            await syncUpdatingTasks();
-            await syncDeletingTasks();
-            await syncUpdatingTicks();
-        } catch (e) {
-            console.error(e);
-        }
+        console.log('syncing');
+        requestInterval = setInterval(syncTaskAndTicksChangesToServer, 40000);
+        await syncTaskAndTicksChangesToServer();
+    }
+};
+
+const syncTaskAndTicksChangesToServer = async () => {
+    try {
+        await syncCreatingTasks();
+        await syncUpdatingTasks();
+        await syncDeletingTasks();
+        await syncUpdatingTicks();
+    } catch (e) {
+        console.error(e);
     }
 };
 

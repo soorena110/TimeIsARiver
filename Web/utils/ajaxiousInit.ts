@@ -5,5 +5,5 @@ export const initServerSetting = () => {
         'Cache-Control': 'no-cache',
         'Content-Type': 'application/json'
     };
-    Ajaxious.basePath = 'https://time.sainapedia.ir/api';
+    Ajaxious.basePath = localStorage.getItem('url') || 'https://time.sainapedia.ir/api';
 };

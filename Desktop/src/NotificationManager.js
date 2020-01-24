@@ -1,6 +1,6 @@
-import {ipcMain} from 'electron';
-import eNotify from 'electron-notify';
-import path from 'path';
+const {ipcMain} = require('electron');
+const eNotify = require('electron-notify');
+const path = require('path');
 
 
 const showMainWindowVisibility = () => {
@@ -82,4 +82,4 @@ const NotificationManager = {
     }
 };
 
-export default NotificationManager;
+module.exports = NotificationManager

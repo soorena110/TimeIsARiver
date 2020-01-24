@@ -1,27 +1,15 @@
 import Ajaxious from "ajaxious";
 import {dispatch, getState} from "../../../Redux";
 import {TickInfo, TickType} from "../../../Redux/DataState/Tasks/Models/TickInfo";
-import {addTaskToSyncs, addTickToSyncs} from "../../../../sync/utils";
+import {addTickToSyncs} from "../../../../sync/utils";
 
+
+let requestInterval;
 export const ticksActions = {
-    requestAllTicks: () => {
-        if (getState().tasks.ticks_flag['loaded_all'] || getState().tasks.ticks_flag['requesting_all'])
-            return;
-
-        dispatch({type: 'flag_ticks', key: 'requesting_all'});
-        return Ajaxious.get('/ticks').then(res => {
-            if (res.isSuccess) {
-                dispatch([
-                    {type: 'set_ticks', data: res.data},
-                    {type: 'unflag_ticks', key: 'requesting_all'},
-                    {type: 'flag_ticks', key: 'loaded_all'}
-                ]);
-            } else dispatch({type: 'unflag_ticks', key: 'requesting_all'});
-
-            return res;
-        });
+    async startRequestingTicks() {
+        requestInterval = setInterval(requestAllTicks, 40000);
+        await requestAllTicks();
     },
-
 
     async setTick(type: TickType, taskId: number, forDate: string) {
         const state = getState().tasks;
@@ -30,7 +18,7 @@ export const ticksActions = {
         if (state.ticks_flag[flagKey])
             return;
 
-        const theTick = (state.ticks as any || []).find((r?: TickInfo) => r && r.taskId == taskId && r.forDate == forDate) as TickInfo;
+        const theTick = Object.values(state.ticks || {}).find((r?: TickInfo) => r && r.taskId == taskId && r.forDate == forDate) as TickInfo;
         if (theTick && theTick.type == type)
             return;
 
@@ -53,4 +41,21 @@ export const ticksActions = {
 
         return res;
     }
+};
+
+
+const requestAllTicks = async () => {
+    if (getState().tasks.ticks_flag['requesting_all'])
+        return;
+
+    dispatch({type: 'flag_ticks', key: 'requesting_all'});
+    const res = await Ajaxious.get('/ticks');
+    if (res.isSuccess)
+        dispatch([
+            {type: 'set_ticks', data: res.data},
+            {type: 'unflag_ticks', key: 'requesting_all'},
+        ]);
+    else dispatch({type: 'unflag_ticks', key: 'requesting_all'});
+
+    return res;
 };

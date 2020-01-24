@@ -1,16 +1,21 @@
 {
   "name": "timeriver",
   "version": "1.0.0",
-  "description": "",
+  "description": "Time is a river with many eddies",
   "main": "src/index.js",
+  "author": "Mohammad Reza Azarang",
   "scripts": {
-    "start": "electron -r babel-register ."
+    "start": "electron .",
+    "build": "electron-packager . TimeRiver --platform win32 --asar --icon=./src/app.ico --out ./build --overwrite",
+    "pack": "electron-installer-windows --src build/TimeRiver-win32-x64/ --dest build/installers/",
+    "deploy": "npm run build & npm run pack & node deploy.js"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "devtron": "^1.4.0",
     "electron": "^7.1.9",
     "electron-notify": "^0.1.0",
     "electron-window-state": "^5.0.3"
@@ -22,6 +27,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "devtron": "^1.4.0"
+    "electron-installer-windows": "^2.0.0",
+    "electron-packager": "^14.2.0"
   }
 }

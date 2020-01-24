@@ -1,5 +1,5 @@
-import TrayManager from "./TrayManager";
-import MainWindow from "./MainWindow";
+const TrayManager = require("./TrayManager");
+const MainWindow = require("./MainWindow");
 
 const {app} = require('electron');
 
@@ -8,5 +8,5 @@ app.on('ready', () => {
 
     TrayManager.create();
     MainWindow.create();
-    require('./NotificationManager').default.start();
+    require('./NotificationManager').start();
 });
